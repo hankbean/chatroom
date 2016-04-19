@@ -5,6 +5,15 @@ chatroom - 線上多人/單人聊天室
 2.如有更新 請先開branch 確認無bug再由 pantc12 做合併動作<br>
 3.有一點成果即可紀錄<br>
 
+Node socket server 啟動方法:<br>
+<pre>node app.js</pre>
+
+目前主要檔案路徑：<br>
+./chatting (client端 即php/html普通網頁)<br>
+./server (server端)<br>
+
+
+
 格式:
 
 ###2016/04/19
