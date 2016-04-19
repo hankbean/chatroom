@@ -1,0 +1,74 @@
+.leftPad{
+      height: 400px;
+      margin-right: 30px;
+      float: left;
+      overflow: scroll;    
+      text-align: left;
+      width: 170px;
+      white-space:nowrap; 
+
+    }
+    /* 设置滚动条的样式 */
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    /* 滚动槽 */
+    ::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
+    /* 滚动条滑块 */
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: white;
+        border-width:0.5px;
+        border-color: #dededf;
+        border-style:solid;
+    }
+    ::-webkit-scrollbar-thumb:window-inactive {
+       background-color: white;
+    }
+    .rightPad{
+      width: 550px;
+      float: left;
+    }
+    .cover-container{
+      width: 850px;
+    }
+    .cover-container{
+     
+    }
+    .centerRoom{
+      padding-left: 50px;
+      background-color: red;
+    }
+    #roomarea{
+      overflow: scroll; 
+      margin: 0;height: 250px;
+      -webkit-appearance: none;
+      tap-highlight-color: rgba(255,255,255,0);
+      padding: .78571429em 1em;
+      background: #fff;
+      border: 1px solid rgba(34,36,38,.15);
+      outline: 0;
+      color: rgba(0,0,0,.87);
+      border-radius: .28571429rem;
+      box-shadow: 0 0 0 0 transparent inset;
+      -webkit-transition: color .1s ease,border-color .1s ease;
+      transition: color .1s ease,border-color .1s ease;
+      font-size: 1em;
+      line-height: 1.2857;
+      text-align:left; 
+    } 
+    #recvFlieds{
+      text-align: left;
+    }
+    #msgTextFlieds{
+      padding-left:10px;
+    }
+    #msgText{
+      width: 365px;
+    }
+    #recv{
+      width:80px;
+    }
