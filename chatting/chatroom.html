@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>Chatting Room</title>
+    <link rel="stylesheet" type="text/css" href="http://semantic-ui.com/dist/semantic.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="./template/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./template/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./template/cover.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./template/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <style type="text/css"></style></head>
+   <link href="./template/chatroom.css" rel="stylesheet">
+
+   
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+ <div class="centerRoom">
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Chatting Room</h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="#">Room</a></li>
+                  <li><a href="#">News</a></li>
+                  <li><a href="#">Staff</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="Pad">
+              <div class="leftPad" onscroll="music();">
+
+                  <div id="Onlinelist"class="ui middle aligned selection list" >
+                   
+
+                  </div>
+                </div>
+                <div class="rightPad">
+                       <div class="ui form">
+                        <div class="field">
+                          <label></label>
+                          <!-- <textarea style="height: 250px;" readonly>
+                          </textarea>
+                          -->
+                          <div id="roomarea" >
+                          </div>
+                        </div>
+                       <div class="ui form">
+                         <div id="recvFields"class="inline fields" >
+                          <select id="recv" class="ui search dropdown" >
+                            <option value="">ALL</option>
+                          </select>
+                          <div id="msgTextFlieds"class="field">
+                            <input id="msgText"type="text" >
+                          </div>
+                          <button onclick="msg(this);" class="ui basic button"><i class="send outline icon"></i>傳送</button>
+                        </div>
+                        
+                        </div>
+
+                      </div>
+                     
+                </div>
+          </div>
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Powered by <a href="http://getbootstrap.com/">PCCU CSIE</a> .Staff <a href="https://twitter.com/mdo">@pantc12@shunxueli@unromanticman</a>.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./template/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="./template/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./template/ie10-viewport-bug-workaround.js"></script>
+  <script type="text/javascript">
+
+        var scrollAudio = new Audio('http://www.never-nop.tw/uploadFile/file/06_%e7%88%b1%e7%bb%99%e7%bd%91_2gei_com.wav');
+        var bgmAudio = new Audio('http://www.never-nop.tw/Gran.mp3');
+    function music(){
+        scrollAudio.play();
+    }
+    //bgmAudio.play();
+  </script>
+  <script type="text/javascript" src="./template/toastr.js"></script>
+<link rel="stylesheet" type="text/css" href="./template/toastr.css" />
+<script type="text/javascript">
+
+</script>
+<script>
+  /**
+  * 全域變數
+  **/
+    var socket = io.connect('http://localhost:9000');
+    var userdata ="";
+    var NowUserID = prompt("ID","輸入");
+    var NowUserNAME = prompt("NAME","輸入");
+  /**
+  * 登入後右上角提示 並登入
+  **/
+    toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+  toastr["success"]("歡迎 "+NowUserNAME+" 您已進入聊天室!");
+  
+    login();
+    
+  /**
+  * 傳送訊息給server 
+  **/
+    function msg(_this){
+
+      if($('#msgText').val()!=""){
+         var obj = new Object();
+         if($('#recv option:selected').text() ===""){
+          obj.recv = 'ALL';
+         }
+         else{
+          obj.recv = $('#recv').find(":selected").text();
+         }
+         obj.id = NowUserID;//$('#id').val();
+         obj.msg = $('#msgText').val();
+         socket.emit('chat message',obj);
+
+         if(obj.recv == 'ALL'){
+          $( "#roomarea" ).append('<p style=\"color:black;\">'+NowUserNAME+':'+$('#msgText').val()+'</p>');
+          }
+           else
+          {
+            $( "#roomarea" ).append('<p style=\"color:#82b548;\">'+NowUserNAME+':'+$('#msgText').val()+'</p>');
+          }
+
+         $('#msgText').val("");
+        //拉到底
+        var objDiv = document.getElementById("roomarea");
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }
+       
+    }
+  /**
+  * 在server端註冊user id 與 name  
+  **/
+    function login(){
+       var obj = new Object();
+       obj.name = NowUserNAME;//$('#name').val();
+       obj.id = NowUserID;//$('#id').val();
+       //AJAX->login-> get session  
+       socket.emit('new user',obj);
+    }
+  /**
+  * 測試傳送
+  **/
+    socket.on('news', function (data) {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+    });
+  /**
+  * 從server端取得訊息
+  **/
+    socket.on('chat message', function (data) {
+
+      console.log(data);
+      if(data.recv == 'ALL'){
+        $( "#roomarea" ).append('<p style=\"color:black;\">'+data.name+':'+data.msg+'</p>');
+      }
+      else
+      {
+        $( "#roomarea" ).append('<p style=\"color:#82b548;\">'+data.name+':'+data.msg+'</p>');
+      }
+      //拉到底
+      var objDiv = document.getElementById("roomarea");
+      objDiv.scrollTop = objDiv.scrollHeight;
+   });
+  /**
+  * 從server端取得在線的使用者
+  **/
+    socket.on('chat onlineUser', function (data) {  
+      //設定全域變數 上線者
+      userdata = data;
+      //清空目前列表
+      $( "#Onlinelist" ).empty();
+      //把資料加上去
+      var list ="";
+      for(var i=0;i<data.length;i++){
+         list += '<div class="item" userId="'+data[i].id+'" userName="'+data[i].name+'" onclick="secretTo(this);"><img class="ui avatar image" src="http://1.gravatar.com/avatar/1f927b4e4b88852701bac87d83473ec8?s=136&d=retro&r=g"><div class="content"><div class="header">'+data[i].name+'</div></div></div>';
+      }
+
+      $( "#Onlinelist" ).append( list );
+      console.log(data);
+   });
+  /**
+  * 本地離線將會呼叫server端踢下線
+  **/
+    socket.on("disconnect", function(){
+     
+    });
+  /**
+  * 選前選擇要傳送訊息的對象
+  **/
+    function secretTo(_obj){
+      $("#recv option").remove();
+      var id = _obj.getAttribute("userId");
+      var name = _obj.getAttribute("userName");
+      $("#recv").append($("<option></option>").attr("value", id).text(name));
+      $("#recv").append($("<option></option>").attr("value", 'ALL').text('ALL'));
+    }
+  /**
+  * 按ENTER可以直接送出訊息
+  **/
+    $("#msgText").keyup(function(event){
+        if(event.keyCode == 13){
+            $("#sendMsgBtn").click();
+        }
+    });
+
+</script>
+
+
+
+</body></html>
