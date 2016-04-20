@@ -4,6 +4,17 @@
 var config = require('./config.json');
 var User = require('./user.js'); 
 var xss = require('xss');
+var mysql = require('mysql');
+
+/**
+*Mysql 建立連線
+**/
+var connection = mysql.createConnection({
+    host: config.host,
+    user: config.user,
+    password: config.password,
+    database: config.database
+});
 
 /**
 * 全域變數
@@ -53,6 +64,7 @@ io.on('connection', function (socket) {
   socket.on('chat message', function(_message){
     try{
        sendMessage(_message.id ,_message.recv , xss(_message.msg) , socket);
+
     }
     catch(e){
       console.log('chat message send error');
@@ -107,6 +119,8 @@ function sendMessage(_id,_recv,_msg,_mainSocket){
       obj.time = getTime();
       //傳給每個人除了自己之外
       _mainSocket.broadcast.emit('chat message',obj);
+      //加入資料到mysql
+      mysqldataMsgInsert(obj.id,obj.recv,obj.msg,obj.time);
       console.log(obj);
   }
   else{
@@ -119,6 +133,8 @@ function sendMessage(_id,_recv,_msg,_mainSocket){
       obj.msg = _msg;
       obj.time = getTime();
       user[recvIndex].getSocket().emit('chat message',obj);
+      //加入資料到mysql
+      mysqldataMsgInsert(obj.id,obj.recv,obj.msg,obj.time);
       console.log(obj);
   }
 
@@ -160,7 +176,7 @@ function getTime(){
   var tHours = timeDate.getHours() > 9 ? timeDate.getHours() : '0'+timeDate.getHours();
   var tMinutes = timeDate.getMinutes() > 9 ? timeDate.getMinutes() : '0'+timeDate.getMinutes();
   var tSeconds = timeDate.getSeconds() > 9 ? timeDate.getSeconds() : '0'+timeDate.getSeconds();
-  return timeDate= timeDate.getFullYear()+'/'+ tMonth +'/'+ tDate +' '+ tHours +':'+ tMinutes +':'+ tSeconds;
+  return timeDate= timeDate.getFullYear()+'-'+ tMonth +'-'+ tDate +' '+ tHours +':'+ tMinutes +':'+ tSeconds;
 }
 
 
@@ -252,4 +268,18 @@ function checkUserExist(_id){
     return true;
   }
   return false;
+}
+
+mysqldataMsgInsert('','','','');
+
+/**
+* 將資料insert mysql資料庫
+*/
+function mysqldataMsgInsert(_id,_recv,_msg,_time){
+  var post  = {from_id: _id, to_id: _id,msg: _msg,time:_time};
+  var query = connection.query('INSERT INTO chat SET ?', post, function(err, result) {
+      //假如要顯示insert結果在server 可以拿掉下面兩行
+      //console.log(err);
+      //console.log(result);
+  });
 }
