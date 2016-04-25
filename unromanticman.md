@@ -2,7 +2,7 @@
 
 ###2016/04/25
 1. 將ALL的value設定成1(即id=1)
-2.修正app.js與chatroom.html內相關參數
+2. 修正app.js與chatroom.html內相關參數
 
 
 ###2016/04/20
