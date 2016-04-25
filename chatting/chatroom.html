@@ -163,16 +163,22 @@
       if($('#msgText').val()!=""){
          var obj = new Object();
          if($('#recv option:selected').text() ===""){
-          obj.recv = 'ALL';
+          obj.recv = '1';
          }
          else{
-          obj.recv = $('#recv').find(":selected").text();
+            //假如選擇ALL回傳1
+            if($('#recv').find(":selected").text() == "ALL"){
+              obj.recv = "1";
+            }
+            else{
+              obj.recv = $('#recv').find(":selected").text();
+            }
          }
          obj.id = NowUserID;//$('#id').val();
          obj.msg = $('#msgText').val();
          socket.emit('chat message',obj);
 
-         if(obj.recv == 'ALL'){
+         if(obj.recv == '1'){
           $( "#roomarea" ).append('<p style=\"color:black;\">'+NowUserNAME+':'+$('#msgText').val()+'</p>');
           }
            else
@@ -210,7 +216,7 @@
     socket.on('chat message', function (data) {
 
       console.log(data);
-      if(data.recv == 'ALL'){
+      if(data.recv == '1'){
         $( "#roomarea" ).append('<p style=\"color:black;\">'+data.name+':'+data.msg+'</p>');
       }
       else
@@ -252,7 +258,7 @@
       var id = _obj.getAttribute("userId");
       var name = _obj.getAttribute("userName");
       $("#recv").append($("<option></option>").attr("value", id).text(name));
-      $("#recv").append($("<option></option>").attr("value", 'ALL').text('ALL'));
+      $("#recv").append($("<option></option>").attr("value", '1').text('ALL'));
     }
   /**
   * 按ENTER可以直接送出訊息
@@ -264,7 +270,6 @@
     });
 
 </script>
-
 
 
 </body></html>

@@ -110,7 +110,7 @@ function sendMessage(_id,_recv,_msg,_mainSocket){
 
  var sendIndex = getUserIndex(_id);
 
-  if(_recv === "ALL"){
+  if(_recv === "1"){
       var obj = new Object();
       obj.id = user[sendIndex].getId();
       obj.name = user[sendIndex].getName();
