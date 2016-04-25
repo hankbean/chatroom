@@ -1,5 +1,10 @@
 #unromanticman
 
+###2016/04/25
+1. 將ALL的value設定成1(即id=1)
+2.修正app.js與chatroom.html內相關參數
+
+
 ###2016/04/20
 1. github 上傳教學
 2. node.js server端增加mysql模組 可以將資料直接寫入資料庫
