@@ -270,7 +270,6 @@ function checkUserExist(_id){
   return false;
 }
 
-mysqldataMsgInsert('','','','');
 
 /**
 * 將資料insert mysql資料庫
