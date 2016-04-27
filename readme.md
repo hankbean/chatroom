@@ -22,3 +22,6 @@ Node socket server 啟動方法:<br>
 1. 今天完成了github repository 建立
 2. 遇到了ＯＯ函式錯誤無法執行,目前已解決該bug
 3. 新增登入頁面
+
+環境建置教學：
+<iframe width="420" height="315" src="https://www.youtube.com/embed/2STAVb38mwc" frameborder="0" allowfullscreen></iframe>
