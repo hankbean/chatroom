@@ -214,6 +214,7 @@
                       var data = JSON.parse(data);
                       if(data.status == 'success'){
                          //set token
+                          document.cookie = "id="+data.id;
                           document.cookie = "username="+data.username;
                           document.cookie = "token="+data.token;
                           document.cookie = "nickname="+data.nickname;

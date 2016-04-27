@@ -64,7 +64,6 @@ io.on('connection', function (socket) {
   socket.on('chat message', function(_message){
     try{
        sendMessage(_message.id ,_message.recv , xss(_message.msg) , socket);
-
     }
     catch(e){
       console.log('chat message send error');

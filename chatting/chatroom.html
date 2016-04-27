@@ -130,7 +130,7 @@
   **/
     var socket = io.connect('http://localhost:9000');
     var userdata ="";
-    var NowUserID = $.cookie("username") == null ? "" : $.cookie("username");
+    var NowUserID = $.cookie("id") == null ? "" : $.cookie("id");
     var NowUserNAME = $.cookie("nickname") == null? "" : $.cookie("nickname");
 
     if(NowUserID!="" && NowUserNAME!=""){
@@ -175,7 +175,7 @@
               obj.recv = "1";
             }
             else{
-              obj.recv = $('#recv').find(":selected").text();
+              obj.recv = $('#recv').find(":selected").val();
             }
          }
          obj.id = NowUserID;//$('#id').val();

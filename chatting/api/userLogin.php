@@ -29,6 +29,7 @@ if($username != "" && $password != ""){
 
         $msg = array();
         $msg["status"] = "success";
+        $msg["id"] = $result["id"];
         $msg["username"] = $result["username"];
         $msg["nickname"] = $result["nickname"];
         $msg["token"] = $token;
