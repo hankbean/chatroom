@@ -1,23 +1,9 @@
-<?php
-    session_start();
-    include_once("api/db.config.php");
-    $db = new PDO($dsn, $user, $password);
-    
-    $id = (isset($_SESSION['id']))? $_SESSION['id']:"";
-    $token = (isset($_SESSION['token']))? $_SESSION['token']:"";
 
-    $q = $db->prepare("SELECT * FROM user WHERE id = :id AND token = :token");
-    $q->bindParam(":id", $id);
-    $q->bindParam(":token", $token);
-    $q->execute();
-    if($q->rowCount() != "1") {
-       exit();
-    }
-?>
 <!DOCTYPE html>
 <!-- saved from url=(0040)# -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+    <script src="./template/jquery.min.js"></script>
+    <script src="./template/jquery.cookie.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -120,7 +106,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./template/jquery.min.js"></script>
+    
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="./template/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -134,22 +120,23 @@
     }
     //bgmAudio.play();
   </script>
-  <script type="text/javascript" src="./template/toastr.js"></script>
+<script type="text/javascript" src="./template/toastr.js"></script>
 <link rel="stylesheet" type="text/css" href="./template/toastr.css" />
-<script type="text/javascript">
+<script type="text/javascript" src="./template/checkPermission.js"></script>
 
-</script>
 <script>
   /**
   * 全域變數
   **/
     var socket = io.connect('http://localhost:9000');
     var userdata ="";
-    var NowUserID = prompt("ID","輸入");
-    var NowUserNAME = prompt("NAME","輸入");
-  /**
-  * 登入後右上角提示 並登入
-  **/
+    var NowUserID = $.cookie("username") == null ? "" : $.cookie("username");
+    var NowUserNAME = $.cookie("nickname") == null? "" : $.cookie("nickname");
+
+    if(NowUserID!="" && NowUserNAME!=""){
+    /**
+    * 登入後右上角提示 並登入
+    **/
     toastr.options = {
     "closeButton": false,
     "debug": false,
@@ -166,10 +153,11 @@
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+    }
+    toastr["success"]("歡迎 "+NowUserNAME+" 您已進入聊天室!");
+
+    login();  
   }
-  toastr["success"]("歡迎 "+NowUserNAME+" 您已進入聊天室!");
-  
-    login();
     
   /**
   * 傳送訊息給server 

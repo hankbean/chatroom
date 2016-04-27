@@ -34,10 +34,6 @@ if($username != "" && $password != ""){
         $msg["token"] = $token;
         $msg["msg"] = "login successful";
         echo json_encode($msg);
-        //add session
-        session_start();
-        $_SESSION['id'] = $result["id"];
-        $_SESSION['token'] = $token;
 
     }else{
         $msg = array();

@@ -132,6 +132,7 @@
           </div>
             <div>
               <button  onclick="sendLogin();"id="login"type="button" class="btn btn-default">登入</button>
+                 <a  href="./register.html"id="login"type="button" class="btn btn-default">註冊聊天室帳號</a>
             </div>
           </form>
       </div>
@@ -212,7 +213,10 @@
                   success: function(data){
                       var data = JSON.parse(data);
                       if(data.status == 'success'){
-                          console.log('login success');
+                         //set token
+                          document.cookie = "username="+data.username;
+                          document.cookie = "token="+data.token;
+                          document.cookie = "nickname="+data.nickname;
                           window.location.href = "./";
                       }
                   }

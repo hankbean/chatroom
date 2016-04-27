@@ -241,12 +241,13 @@
                   success: function(data){
                       var data = JSON.parse(data);
                       alert('['+data.status+']\n'+data.msg);
+                      if(data.status == "success"){
+                        window.location.href = "./login.html";
+                      }
+                      
                   }
 
              });
-
-
-          alert('成功送出');
       }
 
       /**
