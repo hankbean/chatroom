@@ -108,8 +108,8 @@
         </div>
        <form>
           <div class="form-group">
-            <label for="InputEmail1">accunt</label>
-            <input type="email" class="form-control" id="InputEmail1" placeholder="account"></input>
+            <label for="InputEmail">Email</label>
+            <input type="email" class="form-control" id="InputEmail" placeholder="account"></input>
           </div>
 
           <div class="form-group">
@@ -131,7 +131,7 @@
 
           </div>
             <div>
-              <button  onclick="login();"id="login"type="button" class="btn btn-default">登入</button>
+              <button  onclick="sendLogin();"id="login"type="button" class="btn btn-default">登入</button>
             </div>
           </form>
       </div>
@@ -179,7 +179,6 @@
       */
       function checkCaptcha()
       {
-        alert($('#captchaText').val());
         if((captchaVar[0]+captchaVar[1]) == $('#captchaText').val())
         {
           return true;
@@ -194,17 +193,30 @@
       /*
       * 送出表單
       */
-      function login()
+      function sendLogin()
       {
-          if(!checkPassword())
-          {
-              return;
-          }
-
           if(!checkCaptcha())
           {
               return;
           }
+          /*
+          * Ajax
+          */
+          var username = $('#InputEmail').val();
+          var userpwd = $('#pw1').val();
+          var params = 'username='+username+'&password='+userpwd;
+          $.ajax({
+                  url: 'api/userLogin.php',
+                  type:"post",
+                  data: params,
+                  success: function(data){
+                      var data = JSON.parse(data);
+                      if(data.status == 'success'){
+                          console.log('login success');
+                          window.location.href = "./";
+                      }
+                  }
+          });
       }
 
       /**
