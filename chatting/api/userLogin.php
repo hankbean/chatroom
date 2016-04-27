@@ -19,12 +19,13 @@ if($username != "" && $password != ""){
     $q->execute();
 
     $result = $q->fetch(PDO::FETCH_ASSOC);
-
+    
     if(password_verify($password, $result["password"])){
         $token = $session_token = md5($username . date("Y-m-d H:i:s"));;
         $q = $db->prepare("UPDATE user SET token = :token WHERE id = :uid LIMIT 1");
         $q->bindParam(":token", $token);
         $q->bindParam(":uid", $result["id"]);
+        $q->execute();
 
         $msg = array();
         $msg["status"] = "success";
@@ -33,6 +34,11 @@ if($username != "" && $password != ""){
         $msg["token"] = $token;
         $msg["msg"] = "login successful";
         echo json_encode($msg);
+        //add session
+        session_start();
+        $_SESSION['id'] = $result["id"];
+        $_SESSION['token'] = $token;
+
     }else{
         $msg = array();
         $msg["status"] = "failed";

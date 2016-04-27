@@ -1,3 +1,20 @@
+<?php
+    session_start();
+    include_once("api/db.config.php");
+    $db = new PDO($dsn, $user, $password);
+    
+    $id = (isset($_SESSION['id']))? $_SESSION['id']:"";
+    $token = (isset($_SESSION['token']))? $_SESSION['token']:"";
+
+    $q = $db->prepare("SELECT * FROM user WHERE id = :id AND token = :token");
+    $q->bindParam(":id", $id);
+    $q->bindParam(":token", $token);
+    $q->execute();
+    echo $q->rowCount() ;
+    if($q->rowCount() != "1") {
+       exit();
+    }
+?>
 <!DOCTYPE html>
 <!-- saved from url=(0040)# -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
