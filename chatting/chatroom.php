@@ -10,7 +10,6 @@
     $q->bindParam(":id", $id);
     $q->bindParam(":token", $token);
     $q->execute();
-    echo $q->rowCount() ;
     if($q->rowCount() != "1") {
        exit();
     }
