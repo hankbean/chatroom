@@ -274,7 +274,7 @@ function checkUserExist(_id){
 * 將資料insert mysql資料庫
 */
 function mysqldataMsgInsert(_id,_recv,_msg,_time){
-  var post  = {from_id: _id, to_id: _id,msg: _msg,time:_time};
+  var post  = {from_id: _id, to_id: _recv,msg: _msg,time:_time};
   var query = connection.query('INSERT INTO chat SET ?', post, function(err, result) {
       //假如要顯示insert結果在server 可以拿掉下面兩行
       //console.log(err);

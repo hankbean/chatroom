@@ -156,7 +156,8 @@
     }
     toastr["success"]("歡迎 "+NowUserNAME+" 您已進入聊天室!");
 
-    login();  
+    login();
+    getChatMsg();
   }
     
   /**
@@ -272,6 +273,35 @@
             $("#sendMsgBtn").click();
         }
     });
+
+    function getChatMsg()
+      {
+          /*
+          * Ajax
+          */
+          var id = $.cookie("id");
+          var token = $.cookie("token");
+          var params = 'id='+id+'&token='+token;
+          $.ajax({
+                  url: 'api/getUserChat.php',
+                  type:"post",
+                  data: params,
+                  success: function(data){
+                      var data = JSON.parse(data);
+                      console.log(data);
+                        for(var i=0;i<data.length;i++)
+                        {
+                          if(data[i].to_id == '1'){
+                                $( "#roomarea" ).append('<p style=\"color:black;\">'+data[i].from_id+':'+data[i].msg+'</p>');
+                          }
+                          else
+                          {
+                                $( "#roomarea" ).append('<p style=\"color:#82b548;\">'+data[i].from_id+':'+data[i].msg+'</p>');
+                          }
+                        }
+                }
+          });
+      }
 
 </script>
 

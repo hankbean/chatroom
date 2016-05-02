@@ -9,7 +9,7 @@ try {
 }
 
 $id = isset($_POST["id"]) ? $_POST["id"] : "1";
-$token = isset($_SESSION['token']) ? $_SESSION['token']:"";
+$token = isset($_POST['token']) ? $_POST['token']:"";
 
 if($id != ""&&$token!=""){
   
@@ -26,9 +26,11 @@ if($id != ""&&$token!=""){
       return;
     }
 
-    $q = $db->prepare("SELECT * FROM chat WHERE from_id = :fid OR to_id = :fid OR to_id = 1");
+    $q = $db->prepare("SELECT * FROM chat WHERE from_id = :fid OR to_id = :tid OR to_id = '1'");
     $q->bindParam(":fid", $id);
     $q->bindParam(":tid", $id);
+
+
     $q->execute();
 
     $result = $q->fetchall(PDO::FETCH_ASSOC);
