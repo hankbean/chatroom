@@ -26,7 +26,7 @@ if($id != ""&&$token!=""){
       return;
     }
 
-    $q = $db->prepare("SELECT * FROM chat WHERE from_id = :fid OR to_id = :tid OR to_id = '1'");
+    $q = $db->prepare("SELECT from_id, to_id, msg, time, to_u.nickname to_u, from_u.nickname from_u FROM chat, user to_u, user from_u WHERE (to_u.id = to_id AND from_u.id = from_id )AND (from_id = :fid OR to_id = :fid OR to_id = 1) ORDER BY time ASC");
     $q->bindParam(":fid", $id);
     $q->bindParam(":tid", $id);
 
