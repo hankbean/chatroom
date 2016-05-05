@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0040)# -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <script src="./template/jquery.min.js"></script>
     <script src="./template/jquery.cookie.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +35,8 @@
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <style type="text/css"></style></head>
    <link href="./template/chatroom.css" rel="stylesheet">
-
+    <!-- Animate CSS-->
+    <link href="./template/animate.css" rel="stylesheet">
    
   <body>
 
@@ -48,10 +50,11 @@
             <div class="inner">
               <h3 class="masthead-brand">Chatting Room</h3>
               <nav>
-                <ul class="nav masthead-nav">
-                  <li class="active"><a href="#">Room</a></li>
-                  <li><a href="#">News</a></li>
-                  <li><a href="#">Staff</a></li>
+               <ul class="nav masthead-nav">
+                  <li class="active"><a href="./chatroom.html">Room</a></li>
+                  <li><a href="./modifyUserInfo.html">MyInfo</a></li>
+                  <li><a href="./staff.html">Staff</a></li>
+                  <li><a href="#" onclick="LogOut();">LogOut</a></li>
                 </ul>
               </nav>
             </div>
@@ -93,7 +96,7 @@
           </div>
           <div class="mastfoot">
             <div class="inner">
-              <p>Powered by <a href="http://getbootstrap.com/">PCCU CSIE</a> .Staff <a href="https://twitter.com/mdo">@pantc12@shunxueli@unromanticman</a>.</p>
+              <p>Powered by <a href="#">PCCU CSIE</a> .Staff <a href="#">@pantc12@shunxueli@unromanticman</a>.</p>
             </div>
           </div>
           </div>
@@ -302,7 +305,21 @@
                 }
           });
       }
+    /*
+    * 動畫
+    */
+    $('.Pad').addClass('animated fadeIn');
 
+    /*
+    * LogOut
+    */
+     function LogOut () {
+         document.cookie = "nickname" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "username" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "id" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         window.location.href = "./";
+      };
 </script>
 
 

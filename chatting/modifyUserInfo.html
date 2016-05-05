@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!-- saved from url=(0040)# -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+    <!-- Animate CSS-->
+    <link href="./template/animate.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -29,7 +30,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-   <link href="./template/register.css" rel="stylesheet">
+   <link href="./template/modifyUserInfo.css" rel="stylesheet">
 
 
   </head>
@@ -49,12 +50,13 @@
                   <li class="active"><a href="./chatroom.html">Room</a></li>
                   <li><a href="./modifyUserInfo.html">MyInfo</a></li>
                   <li><a href="./staff.html">Staff</a></li>
+                  <li><a href="#" onclick="LogOut();">LogOut</a></li>
                 </ul>
               </nav>
             </div>
       <div class="form-lists">
         <div class="form-title" >
-            <h1 class="cover-heading">建立您的帳戶</h1>
+            <h1 class="cover-heading">修改帳戶資料</h1>
         </div>
        <form>
           <div class="form-group">
@@ -64,7 +66,7 @@
      
           <div class="form-group">
             <label for="InputEmail">Email address</label>
-            <input type="email" class="form-control" id="InputEmail" placeholder="Email@"></input>
+            <input type="email" class="form-control" id="InputEmail" placeholder="Email@" disabled></input>
           </div>
      <div class="form-group">
             <label for="InputName">Sex</label><br>
@@ -72,31 +74,8 @@
             <label class="radio-inline"><input value="F"type="radio" name="optradio">女</label>
             <label class="radio-inline"><input value="O"type="radio" name="optradio">保密</label>
           </div>
-          <div class="form-group">
-             <label for="InputPassword">Password</label>
-             <input type="password" class="form-control" id="pw1" placeholder="password"></input>
-          </div>
-          
-          <div class="form-group">
-             <label for="CheckPassword">CheckPassword</label>
-             <input type="password" class="form-control" id="pw2" placeholder="cheakpassword"/>
-          </div>
-
-          <div>
-            <label for="Captcha">Captcaha</label>
-          </div>
-
-          <div class="captchaCheck">
-
-            <div class="inline field">
-             <input id="captchaText" placeholder="輸入驗證碼"></input>
-             <label id="outCaptcha"></label>
-            </div>
-              <button id="captchaGenBtn"type="button" onclick="captchaGen();" class="btn btn-default">重新產生驗證碼</button>
-
-          </div>
             <div>
-              <button  onclick="sendData();"id="regBtn"type="button" class="btn btn-default">註冊</button>
+              <button  onclick="setUserInfo();"id="regBtn"type="button" class="btn btn-default">修改個人資料</button>
             </div>
           </form>
       </div>
@@ -121,99 +100,86 @@
     <script src="./template/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="./template/ie10-viewport-bug-workaround.js"></script>
-    
+  
+  
+    <script src="./template/jquery.cookie.js"></script>
+    <script type="text/javascript" src="./template/checkPermission.js"></script>
   
     <script type="text/JavaScript">
+   
       /*
-      * 驗證碼全域變數
+      * 取得使用者資料
       */
-      var captchaVar = [];
-       /**
-      * 驗證碼生成
-      */
-      function captchaGen()
-      {
-        //產生1-9兩數字 並儲存到captcha陣列
-
-        captchaVar[0] =(Math.floor((Math.random()*9000)+1000))%9+1;
-        captchaVar[1] =(Math.floor((Math.random()*9000)+1000))%9+1;
-        //儲存目前生成驗證碼 
-        document.getElementById("outCaptcha").innerHTML=captchaVar[0] +'+'+captchaVar[1]+'= ?';
-      }
-      /**
-      * 密碼檢驗
-      */
-      function checkPassword()
-      {
-        if($("#pw1").val()===$("#pw2").val()){
-          return true;
-        }
-        else
-        {
-          alert("兩次密碼輸入不同");
-          return false;
-        }
-      }
-      /**
-      * 驗證碼校驗
-      */
-      function checkCaptcha()
-      {
-        if((captchaVar[0]+captchaVar[1]) == $('#captchaText').val()){
-          return true;
-        }
-        else
-        {
-          alert("驗證碼輸入錯誤");
-          return false;
-        }
-      }
-
-      /*
-      * 送出表單
-      */
-      function sendData(){
-          if(!checkPassword()){
-              return;
-          }
-
-          if(!checkCaptcha()){
-              return;
-          }
-
+      function getUserInfo(){
           /*
           * Ajax
           */
-          var email=$('#InputEmail').val();
-          var name= $('#InputName').val();
-          var pwd = $('#pw2').val();
-          var sex = $('input[name="optradio"]:checked').val();
-
-          var params ="&username="+email+"&password="+pwd+"&sex="+sex+"&email="+email+"&nickname="+name;
+          var username = $.cookie("username");
+          var token = $.cookie("token");
+          
+          var params ="username="+username+"&token="+token;
           
            $.ajax({
 
-                  url: 'api/userRegister.php',
+                  url: 'api/getUserInfo.php',
                   type:"post",
                   data: params,
                   success: function(data){
                       var data = JSON.parse(data);
-                      alert('['+data.status+']\n'+data.msg);
-                      if(data.status == "success"){
-                        window.location.href = "./login.html";
-                      }
-                      
+                      $('#InputEmail').val(data[0].email);
+                      $('#InputName').val(data[0].nickname);
+                      $('input[name="optradio"][value='+data[0].sex+']').attr('checked',true);
+                  }
+
+             });
+      }
+
+      function setUserInfo(){
+          /*
+          * Ajax
+          */
+          var username = $.cookie("username");
+          var token = $.cookie("token");
+          var nickname= $('#InputName').val();
+          var sex = $('input[name="optradio"]:checked').val();
+
+          var params ="username="+username+"&token="+token+"&sex="+sex+"&nickname="+nickname;
+
+           $.ajax({
+
+                  url: 'api/setUserInfo.php',
+                  type:"post",
+                  data: params,
+                  success: function(data){
+                    console.log(data);
+                      var data = JSON.parse(data);
+                      alert(data.status);
+                      window.location.reload();
+
                   }
 
              });
       }
 
       /**
-      * 頁面準備好時載入驗證碼
+      * 頁面準備好時載入個人資料
       */
       $(window).load(function(){
-       captchaGen();
+        getUserInfo();
+        //動畫
+        $('.form-lists').addClass('animated fadeIn');
       });
+     /*
+     * LogOut
+     */
+     function LogOut () {
+         document.cookie = "nickname" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "username" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "id" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         window.location.href = "./";
+      };
     </script>
+
 </body>
 </html>

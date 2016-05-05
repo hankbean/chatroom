@@ -7,8 +7,8 @@ try {
     echo 'Connection failed: ' . $e->getMessage();
 }
 
-$username = isset($_POST['username'])? $_POST['username']:"";
-$token = isset($_POST['token'])? $_POST['token']:"";
+$username = isset($_POST['username'])   ? $_POST['username']  : "";
+$token =  isset($_POST['token'])        ? $_POST['token']     : "";
 
 if($username!=""&&$token!=""){
   $q = $db->prepare("SELECT * FROM user WHERE username = :username AND token = :token");

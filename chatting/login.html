@@ -30,57 +30,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   
-  <style type="text/css">
-
-      .form-title
-      {
-        margin-top: 20px;
-        padding-bottom: 10px;
-      }
-      .form-lists
-      {
-        padding-top: 20px;
-      }
-      .captchaCheck
-      {
-        margin-top: 10px;
-      }
-      .form-control
-      {
-        margin: 0 auto;
-        width: 400px;
-      }
-      #captchaText
-      {
-        width:150px;
-        height: 34px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-        -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-      }
-      #login
-      {
-        margin-top:10px;
-      }
-      #outCaptcha
-      {
-        padding-left: 20px;
-      }
-      #captchaGenBtn
-      {
-        margin-top: 15px;
-      }
-  </style>
+  <link href="./template/login.css" rel="stylesheet">
 
   </head>
 
@@ -95,10 +45,10 @@
             <div class="inner">
               <h3 class="masthead-brand">Chatting Room</h3>
               <nav>
-                <ul class="nav masthead-nav">
-                  <li class="active"><a href="#">Room</a></li>
-                  <li><a href="#">News</a></li>
-                  <li><a href="#">Staff</a></li>
+               <ul class="nav masthead-nav">
+                  <li class="active"><a href="./chatroom.html">Room</a></li>
+                  <li><a href="./modifyUserInfo.html">MyInfo</a></li>
+                  <li><a href="./staff.html">Staff</a></li>
                 </ul>
               </nav>
             </div>
@@ -137,7 +87,7 @@
           </form>
       </div>
      <div class="inner">
-              <p>Powered by <a href="http://getbootstrap.com/">PCCU CSIE</a> .Staff <a href="">@pantc12@shunxueli@unromanticman</a>.</p>
+              <p>Powered by <a href="#">PCCU CSIE</a> .Staff <a href="#">@pantc12@shunxueli@unromanticman</a>.</p>
             </div>
           </div>
 
@@ -231,6 +181,9 @@
       {
        captchaGen();
       });
+
+    
+
     </script>
 </body>
 </html>

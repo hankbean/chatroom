@@ -8,8 +8,8 @@ try {
     echo 'Connection failed: ' . $e->getMessage();
 }
 
-$id = isset($_POST["id"]) ? $_POST["id"] : "1";
-$token = isset($_POST['token']) ? $_POST['token']:"";
+$id =    isset($_POST["id"])      ?   $_POST["id"]     :  "1";
+$token = isset($_POST['token'])   ?   $_POST['token']  :  "";
 
 if($id != ""&&$token!=""){
   

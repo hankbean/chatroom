@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>Chatting Room</title>
+
+    <!-- Semantic UI CSS -->
+    <link href="./template/semantic.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="./template/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./template/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./template/cover.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./template/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Chatting Room</h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="./chatroom.html">Room</a></li>
+                  <li><a href="./modifyUserInfo.html">MyInfo</a></li>
+                  <li><a href="./staff.html">Staff</a></li>
+                  <li><a href="#" onclick="LogOut();">LogOut</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div id="staffTitle"class="inner cover">
+              <div class="jumbotron">
+                <h2>Staff</h2>
+               
+              </div>
+              <!-- -->
+              <div class="ui comments">
+                <div class="comment">
+                  <a class="avatar">
+                    <img src="https://avatars3.githubusercontent.com/u/3716086?v=3&s=460">
+                  </a>
+                  <div class="content">
+                    <a class="author">pantc12</a>
+                    <div class="metadata">
+                    </div>
+                    <div class="text">Github: <a href="https://github.com/pantc12">https://github.com/pantc12</a></div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <div class="ui comments">
+                <div class="comment">
+                  <a class="avatar">
+                    <img src="https://avatars2.githubusercontent.com/u/17714852?v=3&s=460">
+                  </a>
+                  <div class="content">
+                    <a class="author">shunxueli</a>
+                    <div class="metadata">
+                    </div>
+                    <div class="text">Github: <a href="https://github.com/shunxueli">https://github.com/shunxueli</a></div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+              <div class="ui comments">
+                <div class="comment">
+                  <a class="avatar">
+                    <img src="https://avatars2.githubusercontent.com/u/12533553?v=3&s=460">
+                  </a>
+                  <div class="content">
+                    <a class="author">unromanticman</a>
+                    <div class="metadata">
+                    </div>
+                    <div class="text">Github: <a href="https://github.com/unromanticman">https://github.com/unromanticman </a></div>
+                  </div>
+                </div>
+              </div>
+              <!-- -->
+          </div>
+         
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Powered by <a href="#">PCCU CSIE</a> .Staff <a href="#">@pantc12@shunxueli@unromanticman</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./template/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+   
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./template/ie10-viewport-bug-workaround.js"></script>
+
+     <script src="./template/bootstrap.min.js"></script>
+    <!-- Animate CSS-->
+    <link href="./template/animate.css" rel="stylesheet">
+    <script type="text/javascript">
+      $('#staffTitle').addClass('animated bounceInLeft');
+    /*
+     * LogOut
+     */
+     function LogOut () {
+         document.cookie = "nickname" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "username" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         document.cookie = "id" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+         window.location.href = "./";
+      };
+    </script>
+    
+</body></html>
