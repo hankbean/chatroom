@@ -27,24 +27,24 @@ if($username != "" && $password != ""){
         $q->bindParam(":uid", $result["id"]);
         $q->execute();
 
-        $msg = array();
-        $msg["status"] = "success";
-        $msg["id"] = $result["id"];
-        $msg["username"] = $result["username"];
-        $msg["nickname"] = $result["nickname"];
-        $msg["token"] = $token;
-        $msg["msg"] = "login successful";
+        $msg                = array();
+        $msg["status"]      = "success";
+        $msg["id"]          = $result["id"];
+        $msg["username"]    = $result["username"];
+        $msg["nickname"]    = $result["nickname"];
+        $msg["token"]       = $token;
+        $msg["msg"]         = "login successful";
         echo json_encode($msg);
 
     }else{
-        $msg = array();
-        $msg["status"] = "failed";
-        $msg["msg"] = "username or password wrong";
+        $msg            = array();
+        $msg["status"]  = "failed";
+        $msg["msg"]     = "username or password wrong";
         echo json_encode($msg);
     }
 }else{
-    $msg = array();
-    $msg["status"] = "failed";
-    $msg["msg"] = "require username and password";
+    $msg            = array();
+    $msg["status"]  = "failed";
+    $msg["msg"]     = "require username and password";
     echo json_encode($msg);
 }

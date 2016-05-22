@@ -8,12 +8,12 @@ try {
     echo 'Connection failed: ' . $e->getMessage();
 }
 
-$username = isset($_POST["username"])   ? $_POST["username"]    : "";
-$password = isset($_POST["password"])   ? $_POST["password"]    : "";
-$sex      = isset($_POST["sex"])        ? $_POST["sex"]         : "";
-$email    = isset($_POST["email"])      ? $_POST["email"]       : "";
-$nickname = isset($_POST["nickname"])   ? $_POST["nickname"]    : "";
-$password_hash = password_hash($password, PASSWORD_DEFAULT);
+$username       = isset($_POST["username"])   ? $_POST["username"]    : "";
+$password       = isset($_POST["password"])   ? $_POST["password"]    : "";
+$sex            = isset($_POST["sex"])        ? $_POST["sex"]         : "";
+$email          = isset($_POST["email"])      ? $_POST["email"]       : "";
+$nickname       = isset($_POST["nickname"])   ? $_POST["nickname"]    : "";
+$password_hash  = password_hash($password, PASSWORD_DEFAULT);
 
 
 if($username != "" && $password != "" && $sex != "" && $email != "" && $nickname != ""){
@@ -42,19 +42,19 @@ if($username != "" && $password != "" && $sex != "" && $email != "" && $nickname
     $q->execute();
 
     if($q){
-        $msg = array();
-        $msg["status"] = "success";
-        $msg["msg"] = "register successful";
+        $msg            = array();
+        $msg["status"]  = "success";
+        $msg["msg"]     = "register successful";
         echo json_encode($msg);
     }else{
-        $msg = array();
-        $msg["status"] = "failed";
-        $msg["msg"] = "register failed";
+        $msg            = array();
+        $msg["status"]  = "failed";
+        $msg["msg"]     = "register failed";
         echo json_encode($msg);
     }
 }else{
-    $msg = array();
-    $msg["status"] = "failed";
-    $msg["msg"] = "all field must be fill";
+    $msg            = array();
+    $msg["status"]  = "failed";
+    $msg["msg"]     = "all field must be fill";
     echo json_encode($msg);
 }

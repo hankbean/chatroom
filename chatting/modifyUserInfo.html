@@ -76,6 +76,7 @@
           </div>
             <div>
               <button  onclick="setUserInfo();"id="regBtn"type="button" class="btn btn-default">修改個人資料</button>
+              <button  onclick="delUserChat();"id="regBtn"type="button" class="btn btn-default">清除對話</button>
             </div>
           </form>
       </div>
@@ -107,6 +108,7 @@
   
     <script type="text/JavaScript">
    
+
       /*
       * 取得使用者資料
       */
@@ -134,7 +136,36 @@
              });
       }
 
+      function delUserChat(){
+
+          if (confirm('Are you sure you want to clean chat?')) {
+             var id = $.cookie("id");
+             var token = $.cookie("token");
+
+             var params ="id="+id+"&token="+token;
+            
+             $.ajax({
+
+                    url: 'api/delUserChat.php',
+                    type:"post",
+                    data: params,
+                    success: function(data){
+                      console.log(data);
+                        var data = JSON.parse(data);
+                        if(data.status == 'success'){
+                            alert(data.msg);
+                        }
+                        else{
+                            alert(data.msg);
+                        }
+                      
+                    }
+               });
+          } 
+
+      }
       function setUserInfo(){
+
           /*
           * Ajax
           */

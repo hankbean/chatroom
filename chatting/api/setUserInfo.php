@@ -20,8 +20,8 @@ if($username != "" && $token != "" && $sex!="" && $nickname!=""){
     $q->bindParam(":token", $token);
     $q->execute();
     if($q->rowCount() != "1") {
-      $msg = array();
-      $msg["status"] = "failed";
+        $msg            = array();
+        $msg["status"]  = "failed";
       echo json_encode($msg);
     }
     else{
@@ -33,15 +33,15 @@ if($username != "" && $token != "" && $sex!="" && $nickname!=""){
     $q->bindParam(":token", $token);
     $q->execute();
 
-    $msg = array();
-    $msg["status"] = "success";
+    $msg            = array();
+    $msg["status"]  = "success";
     echo json_encode($msg);
     }
    
 }
 else{
-    $msg = array();
-    $msg["status"] = "failed";
-    $msg["msg"] = "all field must be fill";
+    $msg            = array();
+    $msg["status"]  = "failed";
+    $msg["msg"]     = "all field must be fill";
     echo json_encode($msg);
 }

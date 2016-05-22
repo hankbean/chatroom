@@ -8,8 +8,8 @@ try {
     echo 'Connection failed: ' . $e->getMessage();
 }
 
-$username = isset($_POST['username'])   ?   $_POST['username']  : "";
-$token =    isset($_POST['token'])      ?   $_POST['token']     : "";
+$username   = isset($_POST['username'])   ?   $_POST['username']  : "";
+$token      = isset($_POST['token'])      ?   $_POST['token']     : "";
 
 if($username != "" && $token != ""){
   
@@ -20,8 +20,8 @@ if($username != "" && $token != ""){
     $q->execute();
    
     if($q->rowCount() != "1"){
-        $msg = array();
-        $msg["status"] = "failed";
+        $msg            = array();
+        $msg["status"]  = "failed";
         echo json_encode($msg);
     }
 
@@ -35,8 +35,8 @@ if($username != "" && $token != ""){
 
 }
 else{
-    $msg = array();
-    $msg["status"] = "failed";
-    $msg["msg"] = "all field must be fill";
+    $msg            = array();
+    $msg["status"]  = "failed";
+    $msg["msg"]     = "all field must be fill";
     echo json_encode($msg);
 }

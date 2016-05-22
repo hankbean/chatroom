@@ -11,7 +11,7 @@ try {
 $id     = isset($_POST["id"])      ?   $_POST["id"]     :  "1";
 $token  = isset($_POST['token'])   ?   $_POST['token']  :  "";
 
-if($id != ""&&$token!=""){
+if($id != "" && $token != ""){
   
     //檢查token是否正確
     $q = $db->prepare("SELECT * FROM user WHERE id = :id AND token = :token");
@@ -19,25 +19,27 @@ if($id != ""&&$token!=""){
     $q->bindParam(":token", $token);
     $q->execute();
     if($q->rowCount() != "1") { 
+
       $msg            = array();
       $msg["status"]  = "failed";
-      $msg["msg"]     = "tokenError";
+      $msg["msg"]     = "token error";
       echo json_encode($msg);
       return;
     }
 
-    $q = $db->prepare("SELECT from_id, to_id, msg, time, to_u.nickname to_u, from_u.nickname from_u FROM chat, user to_u, user from_u WHERE (to_u.id = to_id AND from_u.id = from_id )AND (from_id = :fid OR to_id = :fid OR to_id = 1) ORDER BY time ASC");
-    
+    $q = $db->prepare("DELETE FROM chat where from_id = :fid or to_id = :tid ");
     $q->bindParam(":fid", $id);
     $q->bindParam(":tid", $id);
-
     $q->execute();
 
-    $result = $q->fetchall(PDO::FETCH_ASSOC);
-    echo json_encode($result);
+    $msg            = array();
+    $msg["status"]  = "success";
+    $msg["msg"]     = "chat delete success";
+    echo json_encode($msg);
+
 }else{
     $msg            = array();
     $msg["status"]  = "failed";
-    $msg["msg"]     = "all field must be fill";
+    $msg["msg"]     = "chat delete error";
     echo json_encode($msg);
 }
